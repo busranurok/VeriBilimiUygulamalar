@@ -11,10 +11,11 @@ df_copy.head()
 
 #Soru : ListComprehension yapısı kullanarak taxis verisindeki numeric değişkenlerin isimlerini büyük harfe çeviriniz ve başına NUM  ekleyiniz
 
-["NUM_" + col.upper() for col in df_copy.columns if str(df_copy[col].dtype) not in ["object", "string", "bool"]]
+["NUM_" + col.upper() for col in df_copy.columns if df_copy[col].dtype not in ["object", "category", "bool"]]
 
 ["NUM_" + col.upper() for col in df_copy.columns if df_copy[col].dtype in ["complex", "int", "float"]]
 
+df_copy.dtypes #Bütün tipler object olduğu için:
 ["NUM_" + col.upper() for col in df_copy.columns if df_copy[col].dtype != "O"]
 
 
@@ -22,7 +23,7 @@ df_copy.head()
 
 df["distance"] # bu bana veri seti döner ama col dediğimde ben column ismini elde ederim!
 
-[col + "O" for col in df_copy.columns if col not in "o"]
+[col + "O" for col in df_copy.columns if "o" not in col]
 
 
 #Soru : ListComprehension yapısı kullanarak taxis verisindeki değişkenlerden ["payment","tip"] olmayanları seçin ve yeni bir dataset oluşturun
@@ -57,7 +58,7 @@ df_copy.groupby(["payment", "distance"]).agg({"tip": ["sum", "count", "mean", "m
 df_copy["distance_degeri_1den_kucuk_olanlar"] = df_copy["distance"]
 
 # datasetin içerisinde şu değeri 1 den küçük olanların yine o değerini getir ve 1 e eşitle diyoruz. Eğer virgülden sonraki kısmı yazmazsak bütün değişkenlerin değerlerine 1 ataması yapar.
-df_copy.loc[df['distance_degeri_1den_kucuk_olanlar'] < 1,"distance_degeri_1den_kucuk_olanlar"] = 1
+df_copy.loc[df_copy['distance_degeri_1den_kucuk_olanlar'] < 1,"distance_degeri_1den_kucuk_olanlar"] = 1
 
 
 #apply değişkendeki her eleman için içerisinde yazılmış olan fonksiyonu gerçekleştiriyor.
@@ -130,7 +131,3 @@ df_copy["total_segments"] = pd.cut(x=df_copy["total"], bins=bins, labels=labels)
 #Soru : tip verisini pickup_zone ve payment bazında mean değerini bulun. böylelikle Hudson dan binen birinin kredi kartıyla ödeme yapacağı takdirde tahminen ne kadar tip bırakacağını bulabilirsiniz
 
 df_copy.groupby(["payment", "pickup_zone"]).agg({"tip": "mean"})
-
-
-
-
