@@ -29,6 +29,8 @@ def check_dataframe(dataframe, head=5):
     print(dataframe.isnull().sum())
     print("describe")
     print(dataframe.describe().T)
+    print("dtpes")
+    print(dataframe.dtpes)
 
 
 #Kategorik, Nümerik, Kardinal değişkenleri buluyoruz.
